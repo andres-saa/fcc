@@ -1,0 +1,74 @@
+
+server {
+    listen 443 ssl;
+    http2 on;
+    server_name fr.fresasconcrema.co;
+
+    ssl_certificate /etc/letsencrypt/live/fr.fresasconcrema.co/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/fr.fresasconcrema.co/privkey.pem;
+    include /etc/nginx/conf.d/ssl_params.conf;
+
+    location / {
+        proxy_pass http://front_fr:3000;
+        include /etc/nginx/proxy_params.conf;
+    }
+}
+
+server {
+    listen 443 ssl;
+    http2 on;
+    server_name www.fr.fresasconcrema.co;
+
+    ssl_certificate /etc/letsencrypt/live/www.fr.fresasconcrema.co/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/www.fr.fresasconcrema.co/privkey.pem;
+    include /etc/nginx/conf.d/ssl_params.conf;
+
+    location / {
+        return 301 https://fr.fresasconcrema.co$request_uri;
+    }
+}
+
+server {
+    listen 443 ssl;
+    http2 on;
+    server_name api.fr.fresasconcrema.co;
+
+    ssl_certificate /etc/letsencrypt/live/api.fr.fresasconcrema.co/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/api.fr.fresasconcrema.co/privkey.pem;
+    include /etc/nginx/conf.d/ssl_params.conf;
+
+    location / {
+        proxy_pass http://api_fr:80;
+        include /etc/nginx/proxy_params.conf;
+    }
+}
+
+server {
+    listen 443 ssl;
+    http2 on;
+    server_name api.socket.fcr.fresasconcrema.co;
+
+    ssl_certificate /etc/letsencrypt/live/api.socket.fcr.fresasconcrema.co/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/api.socket.fcr.fresasconcrema.co/privkey.pem;
+    include /etc/nginx/conf.d/ssl_params.conf;
+
+    location / {
+        proxy_pass http://api_socket:80;
+        include /etc/nginx/proxy_params.conf;
+    }
+}
+
+server {
+    listen 443 ssl;
+    http2 on;
+    server_name pgadmin.fresasconcrema.co;
+
+    ssl_certificate /etc/letsencrypt/live/pgadmin.fresasconcrema.co/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/pgadmin.fresasconcrema.co/privkey.pem;
+    include /etc/nginx/conf.d/ssl_params.conf;
+
+    location / {
+        proxy_pass http://pgadmin:80;
+        include /etc/nginx/proxy_params.conf;
+    }
+}

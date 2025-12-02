@@ -1,0 +1,19 @@
+{
+  "project": "fcr",
+  "domain": "fresasconcrema.co",
+  "email": "andrew19f@gmail.com",
+  "staging": false,
+  "use_pg": true,
+  "use_mongo": false,
+  "use_redis": false,
+  "backs": [
+    "fr",
+    "socket"
+  ],
+  "fronts": [
+    {
+      "name": "fr",
+      "kind": "nuxt"
+    }
+  ]
+}
